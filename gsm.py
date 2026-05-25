@@ -26,21 +26,38 @@ PARA TDO (i,j) E {V} AND F={1,2,3}: ~( (Xi,f) AND (Xj,f) )
 
 from z3 import *
 import numpy as np
+import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
+"""Tentativa de randomizar a topologia das torres GSM"""
+def gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15):
+    n = random.randint(min_torres, max_torres)
+    V = []
+
+    for i in range(1, n):
+        V.append((i, i + 1))
+
+    for i in range(1, n + 1):
+        for j in range(i + 2, n + 1): 
+            if random.random() < probabilidade_conexao:
+                V.append((i, j))
+                
+    return n, V
+
+
 """Plotar o gráfico ao final, caso a fórmula seja satisfatível"""
 def plotar_grafo_gsm(n, V, frequencias_finais):
-    G = nx.Graph()
+    G=nx.Graph()
     G.add_nodes_from(range(1, n + 1))
     G.add_edges_from(V)
     
-    mapa_cores = {1: "#02243b", 2: "#eb1d8e", 3: "#5ee73c"}
-    cores_dos_nos = [mapa_cores[frequencias_finais[node]] for node in G.nodes()]
+    mapa_cores={1: "#02243b", 2: "#eb1d8e", 3: "#5ee73c"}
+    cores_dos_nos=[mapa_cores[frequencias_finais[node]] for node in G.nodes()]
 
     plt.figure(figsize=(8, 6))
     plt.title("Torres GSM", fontsize=14, fontweight='bold')
-    posicao = nx.spring_layout(G, seed=42) 
+    posicao=nx.spring_layout(G, seed=42) 
     
     nx.draw(
         G, 
@@ -57,21 +74,13 @@ def plotar_grafo_gsm(n, V, frequencias_finais):
 
     for freq, cor in mapa_cores.items():
         plt.scatter([], [], c=cor, label=f'Frequência {freq}')
+    
     plt.legend(loc='lower left', scatterpoints=1, frameon=True, title="Legenda")
     plt.show()
 
-"""PASSO INICIAL: Gerando a topologia de torres GSM
-Essa parte está como teste. Até o dia da entrega vamos tentar
-gerar a matriz com o numpy a partir de um número n
-fornecido pelo usuário"""
 
-n=6
-V = [
-    (1, 2), (2, 3), (3, 4), (4, 1), # Quadrado central
-    (1, 5),                         # Antena da esquerda
-    (2, 6)                          # Antena da direita
-]
-
+"""PASSO INICIAL: Gerando a topologia de torres GSM"""
+n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
 #iniciando o solver para, em seguida, add as restrições:
 solver=Solver()
 x = {}
@@ -99,7 +108,6 @@ for i in range(1,n+1):
             Or(Not(x[(i,2)]), Not(x[(i,3)]))   #(~Xi,F2 OR ~Xi,F3)
         )
     )
-    
 
 #-------------------------------------------------------
 #                   RESTRIÇÃO 3
