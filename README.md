@@ -1,8 +1,8 @@
 # **Alocação Frequências em Torres GSM com Z3 Solver**  
-
+  
 Este projeto aplica conceitos de **Lógica Computacional** e **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma otimizada a fim de mitigar interferências entre torres vizinhas.
 
-> **Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa página no Notion [página no Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3).
+**Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa [página no Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3).
 
 ---
 
@@ -104,3 +104,27 @@ Caso a quantidade de torres $não$ $seja$ $satisfatível$, o programa retorna a 
 ```bash
 Com n torres, o modelo não é satisfatível
 ```
+---
+## **Opcional:** Como Contribuir e Testar Novos Cenários
+
+Se você quiser realizar novos cenários, pode modificar os seguintes parâmetros diretamente no arquivo gsm.py:
+1. **Modificar a densidade da rede:** Altere o valor de $probabilidade_conexao$ na função $gerar_topologia_aleatoria$. Valores maiores (ex: 0.4) geram redes extremamente conectadas, ideais para testar os limites do Z3 e forçar cenários UNSAT (Insatisfatíveis).
+2. Mudar o tamanho do problema: Altere os argumentos $min_torres$ e $max_torres$ para testar o tempo de processamento do solver com redes maiores.
+---
+
+## **Sobre o projeto**
+A organização dos arquivos no projeto segue a estrutura abaixo:
+
+```text
+├── .gitignore          # Arquivos e pastas ignorados pelo Git (venv, ex*.png)
+├── README.md           # Documentação principal do projeto
+├── gsm.py              # Script principal com a lógica Z3 e plotagem
+└── requirements.txt    # Biblioteca de dependências do projeto
+```
+<div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
+    <strong style="display: block; margin-bottom: 5px;">Lógica para Computação 2026.1</strong>
+    <span style="display: block; margin-bottom: 5px;"> Hosana F. Gomes <a href ="https://github.com/hosanafg" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
+    Milo Cavalcante <a href="https://github.com/MiloOliveira" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
+    <span style="display: block; margin: 0;">IFCE Maracanaú</span>
+</div>
+<hr style="border: 0; border-top: 1px solid #cccccc00; margin-bottom: 20px;">
