@@ -39,11 +39,10 @@ $$\text{Solução} = R_1 \land R_2 \land R_3$$
 ### **Tecnologias utilizadas:** 
 O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
 
-* **Python 3.x** - Linguagem base do projeto.
+* **Python 3.14.2** - Linguagem base do projeto.
 * **Z3-Solver** - Mecanismo de inferência lógica da Microsoft Research para checagem de matrizes SAT.
 * **NetworkX** - Criação, manipulação e cálculo de posições estruturais dos grafos.
 * **Matplotlib** - Renderização visual e estilização da malha de torres.
-* **NumPy** - Manipulação eficiente de estruturas matemáticas.
 
 ---
 
