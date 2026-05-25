@@ -75,11 +75,11 @@ def plotar_grafo_gsm(n, V, frequencias_finais):
     for freq, cor in mapa_cores.items():
         plt.scatter([], [], c=cor, label=f'Frequência {freq}')
     
-    plt.legend(loc='lower left', scatterpoints=1, frameon=True, title="Legenda")
+    plt.legend(loc='lower right', scatterpoints=1, frameon=True, title="Legenda")
     plt.show()
 
-
 """PASSO INICIAL: Gerando a topologia de torres GSM"""
+
 n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
 #iniciando o solver para, em seguida, add as restrições:
 solver=Solver()
