@@ -26,6 +26,39 @@ PARA TDO (i,j) E {V} AND F={1,2,3}: ~( (Xi,f) AND (Xj,f) )
 
 from z3 import *
 import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
+
+"""Plotar o gráfico ao final, caso a fórmula seja satisfatível"""
+def plotar_grafo_gsm(n, V, frequencias_finais):
+    G = nx.Graph()
+    G.add_nodes_from(range(1, n + 1))
+    G.add_edges_from(V)
+    
+    mapa_cores = {1: "#02243b", 2: "#eb1d8e", 3: "#5ee73c"}
+    cores_dos_nos = [mapa_cores[frequencias_finais[node]] for node in G.nodes()]
+
+    plt.figure(figsize=(8, 6))
+    plt.title("Torres GSM", fontsize=14, fontweight='bold')
+    posicao = nx.spring_layout(G, seed=42) 
+    
+    nx.draw(
+        G, 
+        posicao, 
+        with_labels=True, 
+        node_color=cores_dos_nos, 
+        node_size=1000, 
+        font_size=12, 
+        font_color='white', 
+        font_weight='bold', 
+        edge_color="#a3abac", 
+        width=1
+    )
+
+    for freq, cor in mapa_cores.items():
+        plt.scatter([], [], c=cor, label=f'Frequência {freq}')
+    plt.legend(loc='lower left', scatterpoints=1, frameon=True, title="Legenda")
+    plt.show()
 
 """PASSO INICIAL: Gerando a topologia de torres GSM
 Essa parte está como teste. Até o dia da entrega vamos tentar
@@ -53,7 +86,6 @@ for i in range(1, n+1):
 
 for i in range(1, n+1):
     solver.add(Or(x[(i, 1)], x[(i, 2)], x[(i, 3)]))
-
 
 #-------------------------------------------------------
 #                   RESTRIÇÃO 2
@@ -83,12 +115,15 @@ for (i, j) in V:
 if solver.check() == sat:
     print(f"Com {n} torres, o modelo é satisfatível\n")
     modelo = solver.model()
-    
-    print("Configuração recomendada:\n")
-    for i in range(1, n+1):
+       
+    frequencias_finais = {}
+    for i in range(1, n + 1):
         for f in range(1, 4):
             if is_true(modelo[x[(i, f)]]):
-                print(f"Torre {i} -> Frequência {f}")
+                frequencias_finais[i] = f
                 break
+
+    plotar_grafo_gsm(n, V, frequencias_finais)
+
 else:
     print(f"Com {n} torres, o modelo é insatisfatível")
