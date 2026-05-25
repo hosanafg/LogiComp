@@ -30,22 +30,6 @@ import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
-"""Tentativa de randomizar a topologia das torres GSM"""
-def gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15):
-    n = random.randint(min_torres, max_torres)
-    V = []
-
-    for i in range(1, n):
-        V.append((i, i + 1))
-
-    for i in range(1, n + 1):
-        for j in range(i + 2, n + 1): 
-            if random.random() < probabilidade_conexao:
-                V.append((i, j))
-                
-    return n, V
-
-
 """Plotar o gráfico ao final, caso a fórmula seja satisfatível"""
 def plotar_grafo_gsm(n, V, frequencias_finais):
     G=nx.Graph()
@@ -78,60 +62,98 @@ def plotar_grafo_gsm(n, V, frequencias_finais):
     plt.legend(loc='lower right', scatterpoints=1, frameon=True, title="Legenda")
     plt.show()
 
-"""PASSO INICIAL: Gerando a topologia de torres GSM"""
 
-n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
+"""Tentativa de randomizar a topologia das torres GSM"""
+def gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15):
+    n = random.randint(min_torres, max_torres)
+    V = []
+
+    for i in range(1, n):
+        V.append((i, i + 1))
+
+    for i in range(1, n + 1):
+        for j in range(i + 2, n + 1): 
+            if random.random() < probabilidade_conexao:
+                V.append((i, j))
+                
+    return n, V
+
+
+"""PASSO INICIAL: Gerando a topologia de torres GSM"""
+def resolver_com_z3(n, V):
+#n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
 #iniciando o solver para, em seguida, add as restrições:
-solver=Solver()
-x = {}
+    solver=Solver()
+    x = {}
 
 #-------------------------------------------------------
 #                   RESTRIÇÃO 1
 #-------------------------------------------------------
 
-for i in range(1, n+1):
-    for f in range(1, 4):  # Frequências 1, 2 e 3
-        x[(i, f)] = Bool(f"x_{i}_{f}")
+    for i in range(1, n+1):
+        for f in range(1, 4):  # Frequências 1, 2 e 3
+            x[(i, f)] = Bool(f"x_{i}_{f}")
 
-for i in range(1, n+1):
-    solver.add(Or(x[(i, 1)], x[(i, 2)], x[(i, 3)]))
+    for i in range(1, n+1):
+        solver.add(Or(x[(i, 1)], x[(i, 2)], x[(i, 3)]))
 
 #-------------------------------------------------------
 #                   RESTRIÇÃO 2
 #-------------------------------------------------------
 
-for i in range(1,n+1):
-    solver.add(
-        And(
-            Or(Not(x[(i,1)]), Not(x[(i,2)])),  #(~Xi,F1 OR ~Xi,F2)
-            Or(Not(x[(i,1)]), Not(x[(i,3)])),  #(~Xi,F1 OR ~Xi,F3)
-            Or(Not(x[(i,2)]), Not(x[(i,3)]))   #(~Xi,F2 OR ~Xi,F3)
+    for i in range(1,n+1):
+        solver.add(
+            And(
+                Or(Not(x[(i,1)]), Not(x[(i,2)])),  #(~Xi,F1 OR ~Xi,F2)
+                Or(Not(x[(i,1)]), Not(x[(i,3)])),  #(~Xi,F1 OR ~Xi,F3)
+                Or(Not(x[(i,2)]), Not(x[(i,3)]))   #(~Xi,F2 OR ~Xi,F3)
+            )
         )
-    )
 
 #-------------------------------------------------------
 #                   RESTRIÇÃO 3
 #-------------------------------------------------------
-for (i, j) in V:
-    for f in range(1, 4):
-        # ~(Xi,f AND Xj,f) que equivale a: Not(Xi,f) OR Not(Xj,f)
-        solver.add(Or(Not(x[(i, f)]), Not(x[(j, f)])))
+    for (i, j) in V:
+        for f in range(1, 4):
+            # ~(Xi,f AND Xj,f) que equivale a: Not(Xi,f) OR Not(Xj,f)
+            solver.add(Or(Not(x[(i, f)]), Not(x[(j, f)])))
 
 #-------------------------------------------------------
 #                   RESULTADOS
 #-------------------------------------------------------
-if solver.check() == sat:
-    print(f"Com {n} torres, o modelo é satisfatível\n")
-    modelo = solver.model()
-       
-    frequencias_finais = {}
-    for i in range(1, n + 1):
-        for f in range(1, 4):
-            if is_true(modelo[x[(i, f)]]):
-                frequencias_finais[i] = f
-                break
+    if solver.check() == sat:
+        #print(f"Com {n} torres, o modelo é satisfatível\n")
+        modelo = solver.model()
+        
+        freqs = {i: f for i in range(1, n + 1) 
+                 for f in range(1, 4) 
+                 if is_true(modelo[x[(i, f)]])}
 
-    plotar_grafo_gsm(n, V, frequencias_finais)
+        plotar_grafo_gsm(n, V, freqs)
+        return True, freqs
 
-else:
-    print(f"Com {n} torres, o modelo é insatisfatível")
+    else:
+        print(f"Com {n} torres, o modelo é insatisfatível")
+        return False, {}
+
+"""PASSO FINAL: Calcular taxa de acertos do Z3. 
+Vamos considerar acertos como resultados SAT e erros UNSAT"""
+
+total_experimentos = 20
+acertos_z3 = 0
+
+for rodada in range(1, total_experimentos + 1):
+    n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
+    z3_sat, z3_solucao = resolver_com_z3(n, V)
+
+    if z3_sat:
+        acertos_z3 += 1 
+
+    print(f"Rodada {rodada:02d}: Qtd. de torres: {n:02d} | {'SAT' if z3_sat else 'UNSAT'}")
+
+taxa_z3 = (acertos_z3 *100) / total_experimentos
+
+print("================")
+print(f"TAXA DE ACERTO")
+print(f"{taxa_z3:.2f}% (Boolean)")
+print("================")
