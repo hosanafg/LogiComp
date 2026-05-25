@@ -16,7 +16,7 @@ Toda torre $i$ deve, obrigatoriamente, operar em pelo menos uma das frequências
 $$x_{i,1} \lor x_{i,2} \lor x_{i,3}$$
 
   
-> **Restrição 2 (R2)**: Exclusividade 
+> **Restrição 2 (R2)**: Exclusividade (uma torre só pode operar em uma ÚNICA frequência)
 
 Uma torre $i$ opera em uma única frequência por vez. Se ela estiver alocada em um canal, não pode operar nos demais simultaneamente.
 $$(\neg x_{i,1} \lor \neg x_{i,2}) \land (\neg x_{i,1} \lor \neg x_{i,3}) \land (\neg x_{i,2} \lor \neg x_{i,3})$$
