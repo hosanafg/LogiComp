@@ -2,7 +2,9 @@
   
 Este projeto aplica conceitos de **Lógica Computacional** e **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma otimizada a fim de mitigar interferências entre torres vizinhas.
 
-**Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa [página no Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3).
+**Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa página no [Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3)  
+
+**Memorial Descritivo:** [Overleaf](https://www.overleaf.com/read/krnpmcbgbjvj#c1e12f)
 
 ---
 
@@ -123,7 +125,7 @@ A organização dos arquivos no projeto segue a estrutura abaixo:
 ```
 <div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
     <strong style="display: block; margin-bottom: 5px;">Lógica para Computação 2026.1</strong>
-    <span style="display: block; margin-bottom: 5px;"> Hosana F. Gomes <a href ="https://github.com/hosanafg" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
+    <span style="display: block; margin-bottom: 5px;"> Hosana F. Gomes (representante) <a href ="https://github.com/hosanafg" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
     Milo Cavalcante <a href="https://github.com/MiloOliveira" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
     <span style="display: block; margin: 0;">IFCE Maracanaú</span>
 </div>
