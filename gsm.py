@@ -136,8 +136,8 @@ def resolver_com_z3(n, V):
         print(f"Com {n} torres, o modelo é insatisfatível")
         return False, {}
 
-"""PASSO FINAL: Calcular taxa de acertos do Z3. 
-Vamos considerar acertos como resultados SAT e erros UNSAT"""
+"""PASSO FINAL: Plotar a topologia das torres 
+"""
 
 total_experimentos = 20
 acertos_z3 = 0
@@ -145,15 +145,3 @@ acertos_z3 = 0
 for rodada in range(1, total_experimentos + 1):
     n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
     z3_sat, z3_solucao = resolver_com_z3(n, V)
-
-    if z3_sat:
-        acertos_z3 += 1 
-
-    print(f"Rodada {rodada:02d}: Qtd. de torres: {n:02d} | {'SAT' if z3_sat else 'UNSAT'}")
-
-taxa_z3 = (acertos_z3 *100) / total_experimentos
-
-print("================")
-print(f"TAXA DE ACERTO")
-print(f"{taxa_z3:.2f}% (Boolean)")
-print("================")
