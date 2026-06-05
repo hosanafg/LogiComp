@@ -1,6 +1,8 @@
-# **Alocação Frequências em Torres GSM com Z3 Solver**  
-  
-Este projeto aplica conceitos de **Lógica Computacional** e **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma otimizada a fim de mitigar interferências entre torres vizinhas.
+# **Alocação Frequências em Torres GSM com Z3 Solver** 
+
+Este projeto aplica conceitos de **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma randomizada e otimizada a fim de mitigar interferências entre torres vizinhas.
+
+Ainda, o projeto conta com um módulo de **Benchmark de Raciocínio Lógico**, comparando a precisão matemática absoluta do algoritmo tradicional (Z3) contra a capacidade de aproximação semântica e probabilística de um Modelo de Linguagem de Grande Porte (**LLM Phi-3** executado localmente via Ollama).
 
 **Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa página no [Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3)  
 
@@ -38,11 +40,21 @@ $$\text{Solução} = R_1 \land R_2 \land R_3$$
 
 ---
 
-### **Tecnologias utilizadas:** 
-O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
+## **Metodologia de Validação e Benchmark (Z3 vs. LLM)**
+
+Para avaliar as capacidades do formalismo lógico frente às abordagens modernas de Inteligência Artificial, o projeto adota uma arquitetura de testes em lotes.
+
+1. **Geração e Gabarito (Z3):** O script `gsm.py` gera topologias aleatórias e utiliza o Z3 Solver para determinar rigorosamente se a malha é `SAT` ou `UNSAT`. Esses cenários são exportados para arquivos estruturados.
+2. **Análise de Restrições por LLM (Phi-3):** O script `phi3-att.py` consome os cenários gerados e, por meio de engenharia de prompt estruturada sob temperatura zero ($0.0$), submete as tuplas de coordenadas às restrições do problema para que o modelo deduza a satisfatibilidade.
+3. **Taxa de acerto da LLM:** O sistema confronta as respostas em tempo real, calculando a taxa de acerto do modelo estatístico sobre o veredito matemático do solver.
+
+---
+
+### **Tecnologias utilizadas:** O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
 
 * **Python 3.14.2** - Linguagem base do projeto.
 * **Z3-Solver** - Mecanismo de inferência lógica da Microsoft Research para checagem de matrizes SAT.
+* **Ollama (Phi-3)** - Ambiente de execução local para o Modelo de Linguagem de Grande Porte de 3.8B parâmetros da Microsoft.
 * **NetworkX** - Criação, manipulação e cálculo de posições estruturais dos grafos.
 * **Matplotlib** - Renderização visual e estilização da malha de torres.
 
@@ -50,8 +62,11 @@ O ecossistema do projeto foi construído utilizando as seguintes ferramentas e b
 
 ## **Como Executar o Projeto**
 
-
+### **Pré-requisitos**
+Certifique-se de ter o [Ollama](https://ollama.com/) instalado e o modelo Phi-3 baixado localmente em sua máquina:
 ```bash
+ollama run phi3
+
 # Clonar o Repositório
 git clone [https://github.com/hosanafg/LogiComp.git](https://github.com/hosanafg/LogiComp.git)
 cd LogiComp  
@@ -65,64 +80,48 @@ python -m venv venv
 # Ativar no Linux/macOS
 source venv/bin/activate
 
-#Instalar as bibliotecas necessárias
+# Instalar as bibliotecas necessárias
 pip install -r requirements.txt
 
-# Executar o código principal
+# ETAPA 1: Gerar os lotes de testes via Z3 Solver
 python gsm.py
+
+# ETAPA 2: Rodar a avaliação combinatória com a LLM local
+python phi3.py
 ```
----
 
 ## **Avaliando os resultados**
+### **Z3 Solver: gsm.py**
 
-Se a quantidade de torres for $satisfatível$, será aberta uma janela popup com a distribuição topológica das torres e as conexões (que representam vizinhanças), como mostra a figura abaixo:
+✅ [SAT] Solução encontrada!  
+   ↳ Quantidade de Torres: 8  
+   ↳ Quantidade de Conexões: 9
 
-<p align="center">
-  <table>
-    <tr>
-      <td>
-        <p align="center"><b>Exemplo 1 (SAT)</b></p>
-        <img src="ex1.png" alt="Exemplo 1" width="200">
-      </td>
-      <td>
-        <p align="center"><b>Exemplo 2 (SAT)</b></p>
-        <img src="ex2.png" alt="Exemplo 2" width="200">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <p align="center"><b>Exemplo 3 (SAT)</b></p>
-        <img src="ex3.png" alt="Exemplo 3" width="200">
-      </td>
-      <td>
-        <p align="center"><b>Exemplo 4 (SAT)</b></p>
-        <img src="ex4.png" alt="Exemplo 4" width="200">
-      </td>
-    </tr>
-  </table>
-</p>
-
-Caso a quantidade de torres $não$ $seja$ $satisfatível$, o programa retorna a seguinte mensagem, onde n é o número de torres aleatório escolhido a cada execução do programa:
+### **LLM: phi3.py**
+O script de auditoria processa as linhas lidas sequencialmente dos lotes e rastreia o comportamento do modelo em tempo real
 ```bash
-Com n torres, o modelo não é satisfatível
+  ↳ Linha 01 | Torres: 05 | Conexões: 06 | ✅ CORRETO (Z3=SAT | Phi3=SAT)
+  ↳ Linha 02 | Torres: 14 | Conexões: 19 | ❌ ERRADO ➜ [Z3=UNSAT | Phi3=SAT]
+  ```
+---
+## **Parâmetros de Customização e Testes**
+Você pode modificar a complexidade combinatória dos problemas alterando as seguintes variáveis em gsm.py e phi3.py, respectivamente:
+
+**Densidade e Escala:**  
+- Altere o valor de probabilidade_conexao. Valores elevados (ex: 0.35) geram grafos densos e altamente propensos a estrangulamento de canais (UNSAT), ideais para avaliar a capacidade da LLM.
+- Ajuste min_torres e max_torres. Redes que excedem 10 vértices evidenciam o limite do raciocínio puramente linguístico do Phi-3 quando comparado à exatidão do Z3.
+---
+## **Estrutura de arquivos do projeto**  
+```bash
+├── cenariosZ3/          # Diretório contendo os 10 datasets estruturados gerados pelo Z3 (.csv)
+├── cenariosphi3/        # Diretório contendo as 10 planilhas de logs e predições do Phi-3 (.csv)
+├── .gitignore           # Arquivos ignorados pelo ecossistema Git (venv, caches, lotes locais)
+├── README.md            # Documentação principal do projeto
+├── gsm.py               # Algoritmo de modelagem lógica, execução do Z3 e exportador de bases
+├── phi3-att.py          # Pipeline de automação do benchmark e inferência com a LLM local
+└── requirements.txt     # Manifesto de dependências e versões do ecossistema Python
 ```
 ---
-## **Opcional:** Como Contribuir e Testar Novos Cenários
-
-Se você quiser realizar novos cenários, pode modificar os seguintes parâmetros diretamente no arquivo gsm.py:
-1. **Modificar a densidade da rede:** Altere o valor de $probabilidade_conexao$ na função $gerar_topologia_aleatoria$. Valores maiores (ex: 0.4) geram redes extremamente conectadas, ideais para testar os limites do Z3 e forçar cenários UNSAT (Insatisfatíveis).
-2. Mudar o tamanho do problema: Altere os argumentos $min_torres$ e $max_torres$ para testar o tempo de processamento do solver com redes maiores.
----
-
-## **Sobre o projeto**
-A organização dos arquivos no projeto segue a estrutura abaixo:
-
-```text
-├── .gitignore          # Arquivos e pastas ignorados pelo Git (venv, ex*.png)
-├── README.md           # Documentação principal do projeto
-├── gsm.py              # Script principal com a lógica Z3 e plotagem
-└── requirements.txt    # Biblioteca de dependências do projeto
-```
 <div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
     <strong style="display: block; margin-bottom: 5px;">Lógica para Computação 2026.1</strong>
     <span style="display: block; margin-bottom: 5px;"> Hosana F. Gomes (representante) <a href ="https://github.com/hosanafg" style="color: #eb1d8e; font-weight: bold; text-decoration: none;">[Github]</a></span>
