@@ -30,6 +30,10 @@ import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
+#exportar as tuplas
+import csv       
+import json      
+
 """Plotar o gráfico ao final, caso a fórmula seja satisfatível"""
 def plotar_grafo_gsm(n, V, frequencias_finais):
     G=nx.Graph()
@@ -122,9 +126,13 @@ def resolver_com_z3(n, V):
 #                   RESULTADOS
 #-------------------------------------------------------
     if solver.check() == sat:
-        #print(f"Com {n} torres, o modelo é satisfatível\n")
+
         modelo = solver.model()
-        
+        print(f"Com {n} torres, o modelo é satisfatível\n")
+        #print(f"Quantidade de Conexões: {len(V)}")
+        #print(f"Conexões geradas: {V}\n")
+
+
         freqs = {i: f for i in range(1, n + 1) 
                  for f in range(1, 4) 
                  if is_true(modelo[x[(i, f)]])}
@@ -136,12 +144,30 @@ def resolver_com_z3(n, V):
         print(f"Com {n} torres, o modelo é insatisfatível")
         return False, {}
 
-"""PASSO FINAL: Plotar a topologia das torres 
+"""PASSO FINAL: Plotar e exportar (json e csv, vou testar qual
+desses é melhor para a llm) a topologia das torres 
 """
+
+nome_arquivo = "cenarios_gsm.csv"
+print(f"Gerando dados e exportando para '{nome_arquivo}'...\n")
 
 total_experimentos = 20
 acertos_z3 = 0
 
-for rodada in range(1, total_experimentos + 1):
-    n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.15)
-    z3_sat, z3_solucao = resolver_com_z3(n, V)
+with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
+    escritor = csv.writer(arquivo_csv)
+    escritor.writerow(["rodada", "qtd_torres", "qtd_conexoes", "conexoes", "resultado_z3"])
+
+    for rodada in range(1, total_experimentos + 1):
+        print(f"--- Rodada {rodada:02d} ---")
+        n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=15, probabilidade_conexao=0.1)
+        
+        z3_sat, _ = resolver_com_z3(n, V)
+        resultado_texto = "SAT" if z3_sat else "UNSAT"
+    
+        conexoes_json = json.dumps(V)
+
+        escritor.writerow([rodada, n, len(V), conexoes_json, resultado_texto])
+
+print(f"'{nome_arquivo}' gerado com sucesso.")
+    
