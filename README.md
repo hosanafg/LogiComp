@@ -111,6 +111,9 @@ Você pode modificar a complexidade combinatória dos problemas alterando as seg
 - Altere o valor de probabilidade_conexao. Valores elevados (ex: 0.35) geram grafos densos e altamente propensos a estrangulamento de canais (UNSAT), ideais para avaliar a capacidade da LLM.
 - Ajuste min_torres e max_torres. Redes que excedem 10 vértices evidenciam o limite do raciocínio puramente linguístico do Phi-3 quando comparado à exatidão do Z3.
 ---
+### **Resultados**  
+
+---
 ## **Estrutura de arquivos do projeto**  
 ```bash
 ├── cenariosZ3/          # Diretório contendo os 10 datasets estruturados gerados pelo Z3 (.csv)
@@ -118,7 +121,7 @@ Você pode modificar a complexidade combinatória dos problemas alterando as seg
 ├── .gitignore           # Arquivos ignorados pelo ecossistema Git (venv, caches, lotes locais)
 ├── README.md            # Documentação principal do projeto
 ├── gsm.py               # Algoritmo de modelagem lógica, execução do Z3 e exportador de bases
-├── phi3-att.py          # Pipeline de automação do benchmark e inferência com a LLM local
+├── phi3.py          # Pipeline de automação do benchmark e inferência com a LLM local
 └── requirements.txt     # Manifesto de dependências e versões do ecossistema Python
 ```
 ---
