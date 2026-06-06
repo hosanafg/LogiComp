@@ -2,7 +2,7 @@
 
 Este projeto aplica conceitos de **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma randomizada e otimizada a fim de mitigar interferências entre torres vizinhas.
 
-Ainda, o projeto conta com um módulo de **Benchmark de Raciocínio Lógico**, comparando a precisão matemática absoluta do algoritmo tradicional (Z3) contra a capacidade de aproximação semântica e probabilística de um Modelo de Linguagem de Grande Porte (**LLM Phi-3** executado localmente via Ollama).
+Ainda, o projeto conta com um módulo de **LLM**, comparando a precisão matemática do algoritmo tradicional (Z3) contra a capacidade de aproximação semântica e probabilística de uma LLM de Grande Porte (**Ollama Phi-3**, executado localmente).
 
 **Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa página no [Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3)  
 
@@ -42,21 +42,21 @@ $$\text{Solução} = R_1 \land R_2 \land R_3$$
 
 ## **Metodologia de Validação e Benchmark (Z3 vs. LLM)**
 
-Para avaliar as capacidades do formalismo lógico frente às abordagens modernas de Inteligência Artificial, o projeto adota uma arquitetura de testes em lotes.
+Para avaliar as soluções do Z3 x IA, o projeto adota uma arquitetura de testes em lotes.
 
-1. **Geração e Gabarito (Z3):** O script `gsm.py` gera topologias aleatórias e utiliza o Z3 Solver para determinar rigorosamente se a malha é `SAT` ou `UNSAT`. Esses cenários são exportados para arquivos estruturados.
-2. **Análise de Restrições por LLM (Phi-3):** O script `phi3-att.py` consome os cenários gerados e, por meio de engenharia de prompt estruturada sob temperatura zero ($0.0$), submete as tuplas de coordenadas às restrições do problema para que o modelo deduza a satisfatibilidade.
-3. **Taxa de acerto da LLM:** O sistema confronta as respostas em tempo real, calculando a taxa de acerto do modelo estatístico sobre o veredito matemático do solver.
+1. **Geração e Gabarito (Z3):** O script `gsm.py` gera topologias aleatórias e utiliza o Z3 Solver para determinar se a malha é `SAT` ou `UNSAT`. Esses cenários são exportados para arquivos estruturados na pasta `cenariosZ3`.
+2. **Análise de Restrições por LLM (Phi-3):** O script `phi3.py` consome os cenários gerados e, por meio de engenharia de prompt estruturada sob temperatura zero ($0.0$), submete as tuplas de coordenadas às restrições do problema para que o modelo deduza a satisfatibilidade. Os resultados encontrados são salvos na pasta `cenariosphi3`.
+3. **Taxa de acerto da LLM:** O sistema confronta as respostas em tempo real, calculando a taxa de acerto do modelo estatístico.
 
 ---
 
 ### **Tecnologias utilizadas:** O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
 
 * **Python 3.14.2** - Linguagem base do projeto.
-* **Z3-Solver** - Mecanismo de inferência lógica da Microsoft Research para checagem de matrizes SAT.
-* **Ollama (Phi-3)** - Ambiente de execução local para o Modelo de Linguagem de Grande Porte de 3.8B parâmetros da Microsoft.
+* **Z3-Solver** - Mecanismo de inferência para checagem de problemas do tipo SAT.
+* **Ollama (Phi-3)** - Ambiente de execução local.
 * **NetworkX** - Criação, manipulação e cálculo de posições estruturais dos grafos.
-* **Matplotlib** - Renderização visual e estilização da malha de torres.
+* **Matplotlib** - Renderização e estilização da malha de torres.
 
 ---
 
@@ -98,7 +98,7 @@ python phi3.py
    ↳ Quantidade de Conexões: 9
 
 ### **LLM: phi3.py**
-O script de auditoria processa as linhas lidas sequencialmente dos lotes e rastreia o comportamento do modelo em tempo real
+O script de auditoria processa as linhas sequencialmente, validando em comparação com a resposta do Z3
 ```bash
   ↳ Linha 01 | Torres: 05 | Conexões: 06 | ✅ CORRETO (Z3=SAT | Phi3=SAT)
   ↳ Linha 02 | Torres: 14 | Conexões: 19 | ❌ ERRADO ➜ [Z3=UNSAT | Phi3=SAT]
@@ -116,13 +116,13 @@ Você pode modificar a complexidade combinatória dos problemas alterando as seg
 ---
 ## **Estrutura de arquivos do projeto**  
 ```bash
-├── cenariosZ3/          # Diretório contendo os 10 datasets estruturados gerados pelo Z3 (.csv)
-├── cenariosphi3/        # Diretório contendo as 10 planilhas de logs e predições do Phi-3 (.csv)
-├── .gitignore           # Arquivos ignorados pelo ecossistema Git (venv, caches, lotes locais)
+├── cenariosZ3/          # Diretório contendo os 10 datasets gerados pelo Z3 (.csv)
+├── cenariosphi3/        # Diretório contendo as 10 planilhas do Phi-3 (.csv)
+├── .gitignore           # Arquivos ignorados pelo ecossistema Git 
 ├── README.md            # Documentação principal do projeto
-├── gsm.py               # Algoritmo de modelagem lógica, execução do Z3 e exportador de bases
-├── phi3.py          # Pipeline de automação do benchmark e inferência com a LLM local
-└── requirements.txt     # Manifesto de dependências e versões do ecossistema Python
+├── gsm.py               # Módulo para execução do Z3 e exportação dos resultados
+├── phi3.py              # Pipeline de inferência com a LLM local
+└── requirements.txt     # Dependências do projeto
 ```
 ---
 <div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
