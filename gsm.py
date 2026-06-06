@@ -175,7 +175,7 @@ for i_arquivo in range(1, total_arquivos + 1):
             n, V = gerar_topologia_aleatoria(min_torres=3, max_torres=20, probabilidade_conexao=0.15)
             z3_sat, _ = resolver_com_z3(n, V)
             resultado_texto = "SAT" if z3_sat else "UNSAT"
-            conexoes_json = json.dumps(V)
+            conexoes_json=json.dumps(V)
             
             escritor.writerow([rodada, n, len(V), conexoes_json, resultado_texto])
 
