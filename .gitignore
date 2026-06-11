@@ -1,4 +1,5 @@
 venv/
+.venv/
 testeZ3.py
 antigos/
 *.csv
