@@ -20,9 +20,12 @@ def main():
     pasta_phi3 = "cenariosphi3"
     df_total = carregar_dados(pasta_phi3)
 
+
     # =======================================================
     #               MÉTRICAS GERAIS (SOMA TOTAL)
     # =======================================================
+
+
     total_testes = len(df_total)
     
     acertos_est = len(df_total[df_total['status_estruturado'] == 'CORRETO'])
@@ -39,24 +42,26 @@ def main():
     print(f"Abordagem Linguagem Natural       | Acertos: {acertos_nat} | Taxa: {taxa_nat_geral:.2f}%")
     print("=" * 60)
 
+
     # =======================================================
     #          PROCESSAMENTO DOS DADOS POR QUANTIDADE DE TORRES
     # =======================================================
-    # Agrupamos e calculamos a média de acertos (True = 1, False = 0) multiplicada por 100
+
+
     df_est = df_total.groupby('qtd_torres')['status_estruturado'].apply(lambda x: (x == 'CORRETO').mean() * 100)
     df_nat = df_total.groupby('qtd_torres')['status_natural'].apply(lambda x: (x == 'CORRETO').mean() * 100)
     
-    # Criamos o DataFrame unificado de taxas
+    #DataFrame unificado de taxas
     df_agrupado = pd.DataFrame({
         'Taxa_Estruturado_%': df_est,
         'Taxa_Natural_%': df_nat
     }).fillna(0.0).round(2)
 
-    # Exportação do novo DataFrame comparativo para CSV
+    # Exportação do novo DataFrame para CSV
     df_agrupado.to_csv('acerto-llm-tuplascoord.csv', sep=';', encoding='utf-8')
     print("\nDEBUG: Dados comparativos exportados para 'acerto-llm-tuplascoord.csv'")
 
-    # Extração de Pontos Críticos e Menores Acurácias
+    # Extração de Pontos Críticos 
     min_est = df_agrupado['Taxa_Estruturado_%'].min()
     min_nat = df_agrupado['Taxa_Natural_%'].min()
     
@@ -69,19 +74,21 @@ def main():
         if ponto_queda_nat is None and df_agrupado.loc[torres, 'Taxa_Natural_%'] < 100.0:
             ponto_queda_nat = torres
 
+
     # =======================================================
     #          PLOTAGEM DOS GRÁFICOS (MATPLOTLIB)
     # =======================================================
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
-    fig.suptitle("Análise Comparativa de Paradigmas: Estruturado vs. Linguagem Natural (Phi-3)", fontsize=14, fontweight='semibold')
 
-    # --- Gráfico 1: Barras Comparativas de Acurácia Geral ---
-    categorias = ['Estruturado\n(Cláusulas)', 'Linguagem\nNatural']
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+    fig.suptitle("Análise Comparativa LLM (Tuplas) vs. LLM (Linguagem Natural)", fontsize=14, fontweight='semibold')
+
+    # --- Gráfico 1: Barras Comparativas ---
+    categorias = ['LLM\n(Tuplas)', 'LLM\nLing. Natural']
     valores = [taxa_est_geral, taxa_nat_geral]
-    cores_barras = ["#089db1", "#eb991d"]
+    cores_barras = ["#126772", "#bd7100"]
     
-    barras = ax1.bar(categorias, valores, color=cores_barras, width=0.5, edgecolor='black', alpha=0.8)
-    ax1.set_title("Acurácia Global Absoluta", fontsize=11, fontweight='bold', pad=15)
+    barras = ax1.bar(categorias, valores, color=cores_barras, width=0.5, edgecolor='black', alpha=0.2)
+    ax1.set_title("Taxa de Acerto Absoluta", fontsize=10, fontweight='bold', pad=15)
     ax1.set_ylabel("Taxa de Acerto Geral (%)", fontsize=10)
     ax1.set_ylim(0, 105)
     ax1.grid(axis='y', linestyle=':', alpha=0.5)
@@ -98,32 +105,29 @@ def main():
     # --- Gráfico 2: Curvas de Degradação Combinadas ---
     # Linha do Modelo Estruturado
     ax2.plot(df_agrupado.index, df_agrupado['Taxa_Estruturado_%'], marker='o', 
-             linewidth=2.0, color="#089db1", label='Phi-3 (Estruturado)')
+             linewidth=2.0, color="#089db1", label='LLM (Tuplas)')
     
     # Linha do Modelo em Linguagem Natural
     ax2.plot(df_agrupado.index, df_agrupado['Taxa_Natural_%'], marker='s', 
-             linewidth=2.0, color="#eb991d", label='Phi-3 (Linguagem Natural)')
+             linewidth=2.0, color="#eb991d", label='LLM (Linguagem Natural)')
     
     # Linha de Base do Gabarito (Z3 Solver)
-    ax2.axhline(y=100, color="#135861", linestyle='--', linewidth=1.5, label='Z3 Solver (Gabarito)')
+    ax2.axhline(y=100, color="#131461", linestyle='--', linewidth=1.5, label='Z3 Solver')
 
-    # Linha pontilhada vertical para início da queda do estruturado
     if ponto_queda_est is not None:
-        ax2.axvline(x=ponto_queda_est, color='#056b79', linestyle=':', 
-                    linewidth=1.2, label=f'Queda Estruturado ({ponto_queda_est} torres)')
+        ax2.axvline(x=ponto_queda_est, color="#3BBAE0", linestyle=':', 
+                    linewidth=1.2, label=f'Queda LLM (Tuplas) ({ponto_queda_est} torres)')
                     
-    # Linha pontilhada vertical para início da queda da linguagem natural
     if ponto_queda_nat is not None:
-        ax2.axvline(x=ponto_queda_nat, color='#b36b00', linestyle=':', 
-                    linewidth=1.2, label=f'Queda Lng. Natural ({ponto_queda_nat} torres)')
+        ax2.axvline(x=ponto_queda_nat, color="#ebae52", linestyle=':', 
+                    linewidth=1.2, label=f'Queda LLM Lng. Natural ({ponto_queda_nat} torres)')
 
     ax2.set_title("Taxa de Acerto vs. Complexidade (Qtd. de Torres)", fontsize=11, fontweight='bold', pad=15)
-    ax2.set_xlabel("Quantidade de Torres no Grafo", fontsize=10)
-    ax2.set_ylabel("Acurácia por Agrupamento (%)", fontsize=10)
+    ax2.set_xlabel("Quantidade de Torres", fontsize=10)
+    ax2.set_ylabel("Acerto por Agrupamento (%)", fontsize=10)
     ax2.set_ylim(-5, 105)
     ax2.grid(True, linestyle=':', alpha=0.3)
 
-    # Inserção das legendas pequenas com a menor acurácia registrada de cada um
     ax2.plot([], [], ' ', label=f'Menor Acurácia Est.: {min_est:.1f}%')
     ax2.plot([], [], ' ', label=f'Menor Acurácia Nat.: {min_nat:.1f}%')
     ax2.legend(loc='lower left', fontsize='small')
