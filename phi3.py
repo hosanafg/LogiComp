@@ -10,8 +10,7 @@ modelo_llm="phi3"
 os.makedirs(pasta_destino, exist_ok=True) 
 
 total_arquivos=10 #obs.: deve ser igual ao total_arquivos do módulo gsm.py
-
-#print("Monitorando erros linha por linha em tempo real...\n")
+#print("DEBUG Monitorando erros linha por linha em tempo real...\n")
 
 for i_arquivo in range(1, total_arquivos + 1):
     arq_entrada=f"cenarios_gsm_{i_arquivo:02d}.csv"
@@ -79,13 +78,13 @@ for i_arquivo in range(1, total_arquivos + 1):
 
                 if predicao_phi3 == gabarito_z3:
                     acertos_lote += 1
-                    status_print = f"✅ CORRETO (Z3={gabarito_z3} | Phi3={predicao_phi3})"
+                    status_print = f"CORRETO (Z3={gabarito_z3} | Phi3={predicao_phi3})"
                     vencedor = "CORRETO"
                 else:
-                    status_print = f"❌ ERRADO ➜ [Z3={gabarito_z3} | Phi3={predicao_phi3}]"
+                    status_print = f"ERRADO [Z3={gabarito_z3} | Phi3={predicao_phi3}]"
                     vencedor = "ERRADO"
             
-                print(f"  ↳ Linha {rodada:02d} | Torres: {n:02d} | Conexões: {qtd_conexoes:02d} | {status_print}")
+                print(f" ->> Linha {rodada:02d} | Torres: {n:02d} | Conexões: {qtd_conexoes:02d} | {status_print}")
                 resumos_rodadas.append([rodada, n, qtd_conexoes, gabarito_z3, predicao_phi3, vencedor])
                 
             except Exception as e:
@@ -98,6 +97,6 @@ for i_arquivo in range(1, total_arquivos + 1):
         escritor.writerows(resumos_rodadas)
         
     taxa_lote = (acertos_lote*100.0)/total_lote
-    print(f"\n{i_arquivo:02d} ➜ Taxa de Acerto: {taxa_lote:.2f}%")
+    print(f"\n{i_arquivo:02d} ->> Taxa de Acerto: {taxa_lote:.2f}%")
 
-print("\nTodos os testes foram processados e armazenados na pasta 'cenariosphi3'!")
+print("\nDEBUG: Todos os testes foram processados e armazenados!")
