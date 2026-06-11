@@ -43,6 +43,18 @@ for torres in df_agrupado.index:
         ponto_queda=torres
         break
 
+print("\nTaxa de Acerto:")
+df_agrupado = df_total.groupby('qtd_torres')['status'].value_counts(normalize=True).unstack().fillna(0)
+if 'CORRETO' in df_agrupado.columns:
+    df_agrupado['Taxa_Acerto_%'] = (df_agrupado['CORRETO'] * 100).round(2)
+    #print(df_agrupado[['Taxa_Acerto_%']]) ---print debug
+    
+    # Salvar resultados p/ .csv
+    df_agrupado[['Taxa_Acerto_%']].to_csv('acerto-llm-tuplascoord.csv', sep=';', encoding='utf-8')
+    print("\nDados exportados com sucesso para 'acerto-llm-tuplascoord.csv'")
+else:
+    print("ERRO: Nenhuma linha com status 'CORRETO' encontrada")
+
 # =======================================================
 #          PLOTAGEM DOS GRÁFICOS (MATPLOTLIB)
 # =======================================================
