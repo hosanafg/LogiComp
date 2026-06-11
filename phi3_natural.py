@@ -5,20 +5,16 @@ import sys
 import ollama
 
 def traduzir_para_linguagem_natural(n: int, V: list) -> str:
-    """Traduz as tuplas de vértices e arestas do grafo em um problema descritivo."""
     texto = (
-        f"Imagine que você é o engenheiro chefe responsável por configurar uma nova rede celular "
-        f"contendo {n} torres de transmissão, identificadas numericamente de 1 a {n}. "
+        f"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM "
+        f"contendo {n} torres de transmissão, identificadas numericamente de 1 a {n}.\n"
     )
     if not V:
-        texto += "Convenientemente, nenhuma destas torres possui proximidade geográfica para gerar interferência mútua."
+        texto += "Absolutamente nenhuma destas torres deve possuir proximidade geográfica para gerar interferência, isto é, não podem ser vizinhas."
     else:
-        texto += (
-            "Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes "
-            "torres como vizinhas imediatas de fronteira: "
-        )
-        vizinhancas = [f"a torre {i} faz fronteira com a torre {j}" for i, j in V]
-        texto += ", ".join(vizinhancas) + "."
+        texto += "Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:\n"
+        vizinhancas = [f"- A torre {i} faz fronteira com a torre {j}" for i, j in V]
+        texto += "\n".join(vizinhancas) + "."
     return texto
 
 
@@ -30,8 +26,6 @@ def analisar_lotes():
     os.makedirs(pasta_destino, exist_ok=True)
     total_arquivos = 10 
 
-    print("🤖 Iniciando Experimento Científico: Estruturado vs. Linguagem Natural...")
-
     for i_arquivo in range(1, total_arquivos + 1):
         arq_entrada = f"cenarios_gsm_{i_arquivo:02d}.csv"
         arq_saida = f"phi3-{i_arquivo:02d}.csv"
@@ -40,11 +34,11 @@ def analisar_lotes():
         caminho_saida = os.path.join(pasta_destino, arq_saida)
         
         if not os.path.exists(caminho_entrada):
-            print(f"⚠️ Arquivo {arq_entrada} não encontrado. Pulando...")
+            print(f"ERRO: Arquivo {arq_entrada} não encontrado. Pulando...")
             continue
             
         print(f"\n" + "=" * 60)
-        print(f"📦 PROCESSANDO LOTE {i_arquivo:02d}: {arq_entrada}")
+        print(f"LENDO ARQUIVO: {i_arquivo:02d}: {arq_entrada}")
         print(f"=" * 60)
         
         resumos_rodadas = []
@@ -84,9 +78,12 @@ def analisar_lotes():
                 Responda EXCLUSIVAMENTE com uma única palavra em maiúsculo: ou 'SAT' ou 'UNSAT'. Não adicione justificativas ou pontuação.
                 """
 
+
                 # ---------------------------------------------------
-                # PROMPT 2: Abordagem em Linguagem Natural (Nova)
+                # PROMPT 2: Abordagem em Linguagem Natural 
                 # ---------------------------------------------------
+
+                
                 cenario_narrativo = traduzir_para_linguagem_natural(n, V)
                 prompt_natural = f"""
                 Você é um especialista em otimização de sistemas. Resolva o problema real de alocação abaixo baseado em regras de coloração de grafos.
@@ -104,7 +101,6 @@ def analisar_lotes():
                 """
                 
                 try:
-                    # Execução do teste estruturado
                     resp_est = ollama.chat(
                         model=modelo_llm,
                         messages=[{'role': 'user', 'content': prompt_estruturado}],
@@ -129,7 +125,7 @@ def analisar_lotes():
                     if status_est == "CORRETO": acertos_estruturado += 1
                     if status_nat == "CORRETO": acertos_natural += 1
 
-                    print(f"  ↳ Linha {rodada:02d} | T:{n:02d} | C:{qtd_conexoes:02d} | Z3={gabarito_z3} | Estruturado={pred_estruturado} ({status_est}) | Natural={pred_natural} ({status_nat})")
+                    print(f"--> Linha {rodada:02d} | T:{n:02d} | C:{qtd_conexoes:02d} | Z3={gabarito_z3} | Estruturado={pred_estruturado} ({status_est}) | Natural={pred_natural} ({status_nat})")
                     
                     resumos_rodadas.append([
                         rodada, n, qtd_conexoes, gabarito_z3, 
@@ -138,10 +134,9 @@ def analisar_lotes():
                     ])
                     
                 except Exception as e:
-                    print(f"  ❌ Erro crítico na linha {rodada}: {e}")
+                    print(f"Erro crítico na linha {rodada}: {e}")
                     resumos_rodadas.append([rodada, n, qtd_conexoes, gabarito_z3, "ERRO", "ERRADO", "ERRO", "ERRADO"])
 
-        # Exportação expandida com as duas frentes de teste
         with open(caminho_saida, mode='w', newline='', encoding='utf-8') as f_out:
             escritor = csv.writer(f_out)
             escritor.writerow([
@@ -153,9 +148,9 @@ def analisar_lotes():
             
         taxa_est = (acertos_estruturado * 100.0) / total_lote
         taxa_nat = (acertos_natural * 100.0) / total_lote
-        print(f"\n📊 FIM DO LOTE {i_arquivo:02d} | Taxa Estruturado: {taxa_est:.2f}% | Taxa Natural: {taxa_nat:.2f}%")
+        print(f"\nFIM {i_arquivo:02d} | % Acerto Cláusulas: {taxa_est:.2f}% | % Acerto Linguagem Natural: {taxa_nat:.2f}%")
 
-    print("\n🎉 Todos os testes de dupla abordagem foram consolidados com sucesso!")
+    print("\nDEBUG: Todos os testes foram realizados")
 
 
 if __name__ == "__main__":
