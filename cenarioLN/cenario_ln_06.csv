@@ -1,0 +1,375 @@
+rodada,cenario_natural
+1,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 18 torres de transmissão, identificadas numericamente de 1 a 18.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 15 faz fronteira com a torre 16
+- A torre 16 faz fronteira com a torre 17
+- A torre 17 faz fronteira com a torre 18
+- A torre 1 faz fronteira com a torre 5
+- A torre 1 faz fronteira com a torre 8
+- A torre 1 faz fronteira com a torre 15
+- A torre 2 faz fronteira com a torre 9
+- A torre 3 faz fronteira com a torre 9
+- A torre 3 faz fronteira com a torre 12
+- A torre 4 faz fronteira com a torre 6
+- A torre 4 faz fronteira com a torre 13
+- A torre 6 faz fronteira com a torre 8
+- A torre 6 faz fronteira com a torre 13
+- A torre 6 faz fronteira com a torre 15
+- A torre 7 faz fronteira com a torre 10
+- A torre 9 faz fronteira com a torre 15
+- A torre 9 faz fronteira com a torre 16
+- A torre 10 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 17
+- A torre 14 faz fronteira com a torre 17."
+2,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 6 torres de transmissão, identificadas numericamente de 1 a 6.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 1 faz fronteira com a torre 3
+- A torre 1 faz fronteira com a torre 5
+- A torre 1 faz fronteira com a torre 6
+- A torre 2 faz fronteira com a torre 6."
+3,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 9 torres de transmissão, identificadas numericamente de 1 a 9.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 1 faz fronteira com a torre 6
+- A torre 3 faz fronteira com a torre 6
+- A torre 3 faz fronteira com a torre 9."
+4,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 9 torres de transmissão, identificadas numericamente de 1 a 9.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 2 faz fronteira com a torre 9
+- A torre 3 faz fronteira com a torre 5
+- A torre 4 faz fronteira com a torre 8."
+5,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 9 torres de transmissão, identificadas numericamente de 1 a 9.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 2 faz fronteira com a torre 4
+- A torre 2 faz fronteira com a torre 6
+- A torre 3 faz fronteira com a torre 9
+- A torre 4 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 8
+- A torre 4 faz fronteira com a torre 9
+- A torre 7 faz fronteira com a torre 9."
+6,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 7 torres de transmissão, identificadas numericamente de 1 a 7.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 2 faz fronteira com a torre 6
+- A torre 4 faz fronteira com a torre 6
+- A torre 5 faz fronteira com a torre 7."
+7,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 5 torres de transmissão, identificadas numericamente de 1 a 5.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5."
+8,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 17 torres de transmissão, identificadas numericamente de 1 a 17.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 15 faz fronteira com a torre 16
+- A torre 16 faz fronteira com a torre 17
+- A torre 1 faz fronteira com a torre 6
+- A torre 1 faz fronteira com a torre 7
+- A torre 1 faz fronteira com a torre 9
+- A torre 1 faz fronteira com a torre 16
+- A torre 2 faz fronteira com a torre 9
+- A torre 3 faz fronteira com a torre 8
+- A torre 3 faz fronteira com a torre 12
+- A torre 3 faz fronteira com a torre 16
+- A torre 5 faz fronteira com a torre 9
+- A torre 5 faz fronteira com a torre 11
+- A torre 6 faz fronteira com a torre 9
+- A torre 6 faz fronteira com a torre 14
+- A torre 6 faz fronteira com a torre 16
+- A torre 7 faz fronteira com a torre 14
+- A torre 8 faz fronteira com a torre 10
+- A torre 8 faz fronteira com a torre 11
+- A torre 8 faz fronteira com a torre 15
+- A torre 10 faz fronteira com a torre 12
+- A torre 11 faz fronteira com a torre 13
+- A torre 11 faz fronteira com a torre 17
+- A torre 12 faz fronteira com a torre 17
+- A torre 14 faz fronteira com a torre 16
+- A torre 14 faz fronteira com a torre 17."
+9,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 5 torres de transmissão, identificadas numericamente de 1 a 5.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5."
+10,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 5 torres de transmissão, identificadas numericamente de 1 a 5.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 2 faz fronteira com a torre 5."
+11,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 15 torres de transmissão, identificadas numericamente de 1 a 15.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 1 faz fronteira com a torre 7
+- A torre 2 faz fronteira com a torre 6
+- A torre 2 faz fronteira com a torre 7
+- A torre 2 faz fronteira com a torre 9
+- A torre 2 faz fronteira com a torre 11
+- A torre 2 faz fronteira com a torre 14
+- A torre 3 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 12
+- A torre 6 faz fronteira com a torre 10
+- A torre 7 faz fronteira com a torre 9
+- A torre 7 faz fronteira com a torre 10
+- A torre 7 faz fronteira com a torre 13
+- A torre 9 faz fronteira com a torre 13
+- A torre 9 faz fronteira com a torre 14
+- A torre 10 faz fronteira com a torre 15
+- A torre 11 faz fronteira com a torre 15
+- A torre 13 faz fronteira com a torre 15."
+12,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 7 torres de transmissão, identificadas numericamente de 1 a 7.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 6."
+13,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 18 torres de transmissão, identificadas numericamente de 1 a 18.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 15 faz fronteira com a torre 16
+- A torre 16 faz fronteira com a torre 17
+- A torre 17 faz fronteira com a torre 18
+- A torre 1 faz fronteira com a torre 3
+- A torre 1 faz fronteira com a torre 6
+- A torre 1 faz fronteira com a torre 14
+- A torre 2 faz fronteira com a torre 10
+- A torre 3 faz fronteira com a torre 18
+- A torre 4 faz fronteira com a torre 6
+- A torre 4 faz fronteira com a torre 10
+- A torre 6 faz fronteira com a torre 11
+- A torre 6 faz fronteira com a torre 12
+- A torre 6 faz fronteira com a torre 16
+- A torre 7 faz fronteira com a torre 9
+- A torre 7 faz fronteira com a torre 15
+- A torre 8 faz fronteira com a torre 13
+- A torre 8 faz fronteira com a torre 17
+- A torre 9 faz fronteira com a torre 11
+- A torre 10 faz fronteira com a torre 13
+- A torre 11 faz fronteira com a torre 17
+- A torre 12 faz fronteira com a torre 17
+- A torre 13 faz fronteira com a torre 17
+- A torre 14 faz fronteira com a torre 18."
+14,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 15 torres de transmissão, identificadas numericamente de 1 a 15.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 2 faz fronteira com a torre 4
+- A torre 2 faz fronteira com a torre 10
+- A torre 2 faz fronteira com a torre 12
+- A torre 3 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 8
+- A torre 4 faz fronteira com a torre 11
+- A torre 4 faz fronteira com a torre 14
+- A torre 5 faz fronteira com a torre 7
+- A torre 6 faz fronteira com a torre 8
+- A torre 7 faz fronteira com a torre 9
+- A torre 8 faz fronteira com a torre 15
+- A torre 9 faz fronteira com a torre 13
+- A torre 10 faz fronteira com a torre 13
+- A torre 11 faz fronteira com a torre 13."
+15,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 5 torres de transmissão, identificadas numericamente de 1 a 5.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 1 faz fronteira com a torre 5."
+16,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 20 torres de transmissão, identificadas numericamente de 1 a 20.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 11 faz fronteira com a torre 12
+- A torre 12 faz fronteira com a torre 13
+- A torre 13 faz fronteira com a torre 14
+- A torre 14 faz fronteira com a torre 15
+- A torre 15 faz fronteira com a torre 16
+- A torre 16 faz fronteira com a torre 17
+- A torre 17 faz fronteira com a torre 18
+- A torre 18 faz fronteira com a torre 19
+- A torre 19 faz fronteira com a torre 20
+- A torre 1 faz fronteira com a torre 3
+- A torre 1 faz fronteira com a torre 15
+- A torre 1 faz fronteira com a torre 16
+- A torre 2 faz fronteira com a torre 12
+- A torre 2 faz fronteira com a torre 20
+- A torre 4 faz fronteira com a torre 6
+- A torre 4 faz fronteira com a torre 8
+- A torre 4 faz fronteira com a torre 10
+- A torre 4 faz fronteira com a torre 12
+- A torre 4 faz fronteira com a torre 18
+- A torre 5 faz fronteira com a torre 14
+- A torre 5 faz fronteira com a torre 16
+- A torre 7 faz fronteira com a torre 10
+- A torre 7 faz fronteira com a torre 17
+- A torre 8 faz fronteira com a torre 20
+- A torre 9 faz fronteira com a torre 17
+- A torre 12 faz fronteira com a torre 20
+- A torre 13 faz fronteira com a torre 16
+- A torre 17 faz fronteira com a torre 20."
+17,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 11 torres de transmissão, identificadas numericamente de 1 a 11.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 2 faz fronteira com a torre 6
+- A torre 2 faz fronteira com a torre 7
+- A torre 2 faz fronteira com a torre 9
+- A torre 4 faz fronteira com a torre 9
+- A torre 4 faz fronteira com a torre 11
+- A torre 5 faz fronteira com a torre 8
+- A torre 5 faz fronteira com a torre 9
+- A torre 5 faz fronteira com a torre 10
+- A torre 9 faz fronteira com a torre 11."
+18,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 11 torres de transmissão, identificadas numericamente de 1 a 11.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6
+- A torre 6 faz fronteira com a torre 7
+- A torre 7 faz fronteira com a torre 8
+- A torre 8 faz fronteira com a torre 9
+- A torre 9 faz fronteira com a torre 10
+- A torre 10 faz fronteira com a torre 11
+- A torre 1 faz fronteira com a torre 5
+- A torre 1 faz fronteira com a torre 9
+- A torre 2 faz fronteira com a torre 7
+- A torre 2 faz fronteira com a torre 11
+- A torre 4 faz fronteira com a torre 7
+- A torre 4 faz fronteira com a torre 10
+- A torre 5 faz fronteira com a torre 11
+- A torre 6 faz fronteira com a torre 8
+- A torre 6 faz fronteira com a torre 10
+- A torre 7 faz fronteira com a torre 11."
+19,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 3 torres de transmissão, identificadas numericamente de 1 a 3.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3."
+20,"Você é o engenheiro chefe responsável por configurar uma nova rede de distribuição de torres GSM contendo 6 torres de transmissão, identificadas numericamente de 1 a 6.
+Devido ao posicionamento geográfico, o seu mapeamento de topologia aponta as seguintes fronteiras imediatas:
+- A torre 1 faz fronteira com a torre 2
+- A torre 2 faz fronteira com a torre 3
+- A torre 3 faz fronteira com a torre 4
+- A torre 4 faz fronteira com a torre 5
+- A torre 5 faz fronteira com a torre 6."
