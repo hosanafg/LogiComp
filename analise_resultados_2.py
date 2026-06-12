@@ -27,15 +27,13 @@ def main():
 
 
     total_testes = len(df_total)
-    
-    acertos_est = len(df_total[df_total['status_estruturado'] == 'CORRETO'])
-    acertos_nat = len(df_total[df_total['status_natural'] == 'CORRETO'])
-    
-    taxa_est_geral = (acertos_est / total_testes) * 100
-    taxa_nat_geral = (acertos_nat / total_testes) * 100
+    acertos_est = len(df_total[df_total['status_estruturado']=='CORRETO'])
+    acertos_nat = len(df_total[df_total['status_natural']=='CORRETO'])
+    taxa_est_geral = (acertos_est / total_testes)*100
+    taxa_nat_geral = (acertos_nat / total_testes)*100
 
     print("=" * 60)
-    print("📊 MATRIZ CONSOLIDADA: CLÁUSULAS VS. LINGUAGEM NATURAL")
+    print("COMPARAÇÃO: LLM (TUPLAS) VS. LLM (LINGUAGEM NATURAL)")
     print("=" * 60)
     print(f"Total de cenários avaliados: {total_testes}")
     print(f"Abordagem Estruturada (Cláusulas) | Acertos: {acertos_est} | Taxa: {taxa_est_geral:.2f}%")
@@ -44,12 +42,12 @@ def main():
 
 
     # =======================================================
-    #          PROCESSAMENTO DOS DADOS POR QUANTIDADE DE TORRES
+    #    PROCESSAMENTO DOS DADOS POR QUANTIDADE DE TORRES
     # =======================================================
 
 
-    df_est = df_total.groupby('qtd_torres')['status_estruturado'].apply(lambda x: (x == 'CORRETO').mean() * 100)
-    df_nat = df_total.groupby('qtd_torres')['status_natural'].apply(lambda x: (x == 'CORRETO').mean() * 100)
+    df_est=df_total.groupby('qtd_torres')['status_estruturado'].apply(lambda x: (x=='CORRETO').mean()*100)
+    df_nat=df_total.groupby('qtd_torres')['status_natural'].apply(lambda x: (x=='CORRETO').mean()*100)
     
     #DataFrame unificado de taxas
     df_agrupado = pd.DataFrame({
@@ -65,8 +63,8 @@ def main():
     min_est = df_agrupado['Taxa_Estruturado_%'].min()
     min_nat = df_agrupado['Taxa_Natural_%'].min()
     
-    ponto_queda_est = None
-    ponto_queda_nat = None
+    ponto_queda_est=None
+    ponto_queda_nat=None
     
     for torres in df_agrupado.index:
         if ponto_queda_est is None and df_agrupado.loc[torres, 'Taxa_Estruturado_%'] < 100.0:
@@ -134,7 +132,6 @@ def main():
 
     plt.tight_layout()
     plt.show()
-
 
 if __name__ == "__main__":
     main()
