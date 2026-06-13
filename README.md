@@ -51,7 +51,8 @@ Para avaliar as soluções do Z3 x IA, o projeto adota uma arquitetura de testes
 
 ---
 
-### **Tecnologias utilizadas:** O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
+### **Tecnologias utilizadas:**   
+O ecossistema do projeto foi construído utilizando as seguintes ferramentas e bibliotecas:
 
 * **Python 3.14.2** - Linguagem base do projeto.
 * **Z3-Solver** - Mecanismo de inferência para checagem de problemas do tipo SAT.
@@ -98,12 +99,12 @@ AnaliseComparativaFinal.ipynb
 ## **Avaliando os resultados**
 ### **Z3 Solver: gsm.py**
 
-✅ [SAT] Solução encontrada!  
+[SAT] Solução encontrada!  
    ↳ Quantidade de Torres: 8  
    ↳ Quantidade de Conexões: 9
 
 ### **LLM: phi3.py**
-O script de auditoria processa as linhas sequencialmente, validando em comparação com a resposta do Z3
+O script processa as linhas sequencialmente, validando em comparação com a resposta do Z3
 ```bash
   ↳ Linha 01 | Torres: 05 | Conexões: 06 | ✅ CORRETO (Z3=SAT | Phi3=SAT)
   ↳ Linha 02 | Torres: 14 | Conexões: 19 | ❌ ERRADO [Z3=UNSAT | Phi3=SAT]
@@ -144,8 +145,8 @@ Este, por sua vez, mapeia o comportamento dos modelos à medida que o problema g
 ├── phi3.py                  # Pipeline de inferência estruturada (Tuplas) com a LLM local
 ├── analisar_resultados.py   # Script de fusão de dados, auditoria e plotagem de gráficos
 ├── AnaliseComparativaFinal  # Resultados de todas as inferências da LLM (.ipynb)
-├── requirements.txt         # Dependências obrigatórias das bibliotecas Python
-└── README.md                # Documentação e relatório científico do projeto
+├── requirements.txt         # Dependências de bibliotecas Python
+└── README.md                # Documentaçãos
 ```
 ---
 <div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
