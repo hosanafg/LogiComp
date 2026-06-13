@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import ollama
+from z3 import *
 
 
 def traduzir_para_linguagem_natural(n: int, V: list) -> str:
