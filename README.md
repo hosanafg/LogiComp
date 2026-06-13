@@ -2,7 +2,7 @@
 
 Este projeto aplica conceitos de **Satisfatibilidade Proposicional (SAT)** para resolver o problema real de alocação de frequências em redes de telefonia celular (GSM). Utilizando o provador de teoremas **Z3 Solver**, o sistema distribui frequências de forma randomizada e otimizada a fim de mitigar interferências entre torres vizinhas.
 
-Ainda, o projeto conta com um módulo de **LLM**, comparando a precisão matemática do algoritmo tradicional (Z3) contra a capacidade de aproximação semântica e probabilística de uma LLM de Grande Porte (**Ollama Phi-3**, executado localmente).
+Ainda, o projeto conta com um módulo de **LLM**, comparando a precisão matemática do algoritmo tradicional (Z3) contra a capacidade de aproximação semântica e probabilística de uma LLM de Grande Porte (**Ollama Phi-3**, executado localmente e via Google Colab, devido às restrições de GPU da minha máquina pessoal).
 
 **Documentação Adicional:** Conteúdos utilizados para a resolução desse trabalho podem ser visualizados na nossa página no [Notion](https://www.notion.so/LogiComp-28a52f2869068093abcffeffbed3a2b3)  
 
@@ -47,6 +47,7 @@ Para avaliar as soluções do Z3 x IA, o projeto adota uma arquitetura de testes
 1. **Geração e Gabarito (Z3):** O script `gsm.py` gera topologias aleatórias e utiliza o Z3 Solver para determinar se a malha é `SAT` ou `UNSAT`. Esses cenários são exportados para arquivos estruturados na pasta `cenariosZ3`.
 2. **Análise de Restrições por LLM (Phi-3):** O script `phi3.py` consome os cenários gerados e, por meio de engenharia de prompt estruturada sob temperatura zero ($0.0$), submete as tuplas de coordenadas às restrições do problema para que o modelo deduza a satisfatibilidade. Os resultados encontrados são salvos na pasta `cenariosphi3`.
 3. **Taxa de acerto da LLM:** O sistema confronta as respostas em tempo real, calculando a taxa de acerto do modelo estatístico.
+4. **Fusão dos Modelos (Performance):** O script de análise consolida os CSVs históricos, exportando as métricas e gerando curvas de degradação. Assim, é possível comparar como os modelos performam lado a lado de acordo com a abordagem utilizada.
 
 ---
 
@@ -56,7 +57,7 @@ Para avaliar as soluções do Z3 x IA, o projeto adota uma arquitetura de testes
 * **Z3-Solver** - Mecanismo de inferência para checagem de problemas do tipo SAT.
 * **Ollama (Phi-3)** - Ambiente de execução local.
 * **NetworkX** - Criação, manipulação e cálculo de posições estruturais dos grafos.
-* **Matplotlib** - Renderização e estilização da malha de torres.
+* **Pandas e Matplotlib** - Renderização e estilização da malha de torres.
 
 ---
 
@@ -88,6 +89,10 @@ python gsm.py
 
 # ETAPA 2: Rodar a avaliação combinatória com a LLM local
 python phi3.py
+
+# ETAPA 3: Consolidar resultados, exportar métricas e plotar gráficos comparativos
+python analisar_resultados.py
+AnaliseComparativaFinal.ipynb 
 ```
 
 ## **Avaliando os resultados**
@@ -101,7 +106,7 @@ python phi3.py
 O script de auditoria processa as linhas sequencialmente, validando em comparação com a resposta do Z3
 ```bash
   ↳ Linha 01 | Torres: 05 | Conexões: 06 | ✅ CORRETO (Z3=SAT | Phi3=SAT)
-  ↳ Linha 02 | Torres: 14 | Conexões: 19 | ❌ ERRADO ➜ [Z3=UNSAT | Phi3=SAT]
+  ↳ Linha 02 | Torres: 14 | Conexões: 19 | ❌ ERRADO [Z3=UNSAT | Phi3=SAT]
   ```
 ---
 ## **Parâmetros de Customização e Testes**
@@ -111,18 +116,36 @@ Você pode modificar a complexidade combinatória dos problemas alterando as seg
 - Altere o valor de probabilidade_conexao. Valores elevados (ex: 0.35) geram grafos densos e altamente propensos a estrangulamento de canais (UNSAT), ideais para avaliar a capacidade da LLM.
 - Ajuste min_torres e max_torres. Redes que excedem 10 vértices evidenciam o limite do raciocínio puramente linguístico do Phi-3 quando comparado à exatidão do Z3.
 ---
+  
+  
 ### **Resultados**  
+Para não sobrecarregar o processamento local, a análise comparativa entre as três abordagens na LLM foi realizada no Google Colab e pode ser vista no arquivo ```AnaliseComparativaFinal.ipynb```. Em suma, quando forçamos o Phi-3 a agir como o Solver (Linguagem Natural), ele performa muito abaixo do esperado(27.90%). Ao alterarmos o papel da LLM para agir estritamente como um Tradutor de Especificações (gerando tuplas ou cláusulas para o Z3), a performance dispara. 
+
+**Gráfico de Barras** 
+- **LLM (Linguagem Natural) | 27.90%:** Pior desempenho. Demonstra a incapacidade do modelo de processar e solucionar restrições lógicas complexas puramente através de inferência autorregressiva textual.  
+  
+- **LLM (Tuplas) | 62.68% e Abordagem LLM p/ Z3 (Atual/Tradução) | 63.41%:** Ambas utilizam o Z3 Solver como motor de execução simbólica, praticamente "empatando". Ao delegar o cálculo lógico para o solver, a taxa de sucesso mais que dobra, saltando de 27.90% para a faixa de ~63%.
+
+**Gráfico de Linhas**
+Este, por sua vez, mapeia o comportamento dos modelos à medida que o problema ganha escala (de 2.5 a 20 torres):  
+
+**- Abordagem com LN:** o modelo degrada quase que instantaneamente. A partir de 10 torres, sua acurácia zera completamente em vários pontos, mostrando que o modelo alucina as conexões lógicas quando o número de variáveis cresce de forma linear ou exponencial.
+
+**- Pontos críticos:** A linha verde (Abordagem LLM p/ Z3 Atual) sofre uma queda abrupta logo nas 4 torres (caindo para ~57%). A partir daí, o comportamento de ambos os modelos baseados em código/Z3 assume um padrão "dente de serra" (alta volatilidade). Eles conseguem resolver problemas complexos de 12 ou 13 torres, mas falham erraticamente em cenários intermediários. Isso pode estar relacionado à baixa quantidade de parâmetros do Phi3, que não é bom em processar contextos.
 
 ---
 ## **Estrutura de arquivos do projeto**  
 ```bash
-├── cenariosZ3/          # Diretório contendo os 10 datasets gerados pelo Z3 (.csv)
-├── cenariosphi3/        # Diretório contendo as 10 planilhas do Phi-3 (.csv)
-├── .gitignore           # Arquivos ignorados pelo ecossistema Git 
-├── README.md            # Documentação principal do projeto
-├── gsm.py               # Módulo para execução do Z3 e exportação dos resultados
-├── phi3.py              # Pipeline de inferência com a LLM local
-└── requirements.txt     # Dependências do projeto
+├── cenariosZ3/              # Datasets originais com os gabaritos do Z3 (.csv)
+├── cenariosphi3/            # Resultados das inferências da LLM a partir das tuplas de coord. do Z3 (.csv)
+├── cenarioLN/               # Resultados das inferências da LLM com Linguagem Natural (.csv)
+├── cenarios_z3_phi3/        # Resultados das inferências da LLM traduzindo de Linguagem Natural para código estruturado Z3(.csv)
+├── gsm.py                   # Módulo de execução do Z3
+├── phi3.py                  # Pipeline de inferência estruturada (Tuplas) com a LLM local
+├── analisar_resultados.py   # Script de fusão de dados, auditoria e plotagem de gráficos
+├── AnaliseComparativaFinal  # Resultados de todas as inferências da LLM (.ipynb)
+├── requirements.txt         # Dependências obrigatórias das bibliotecas Python
+└── README.md                # Documentação e relatório científico do projeto
 ```
 ---
 <div style="background-color: #dfdac0; padding:25px; border-radius: 25px; color: #380450; font-family: 'Courier New', Courier, monospace;">
