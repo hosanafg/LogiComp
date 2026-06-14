@@ -90,9 +90,10 @@ python gsm.py
 
 # ETAPA 2: Rodar a avaliação combinatória com a LLM local
 python phi3.py
+python phi3_z3.py
 
 # ETAPA 3: Consolidar resultados, exportar métricas e plotar gráficos comparativos
-python analisar_resultados.py
+python analise_resultados.py
 AnaliseComparativaFinal.ipynb 
 ```
 
@@ -143,7 +144,7 @@ Este, por sua vez, mapeia o comportamento dos modelos à medida que o problema g
 ├── cenarios_z3_phi3/        # Resultados das inferências da LLM traduzindo de Linguagem Natural para código estruturado Z3(.csv)
 ├── gsm.py                   # Módulo de execução do Z3
 ├── phi3.py                  # Pipeline de inferência estruturada (Tuplas) com a LLM local
-├── analisar_resultados.py   # Script de fusão de dados, auditoria e plotagem de gráficos
+├── analise_resultados.py    # Script de fusão de dados, auditoria e plotagem de gráficos
 ├── AnaliseComparativaFinal  # Resultados de todas as inferências da LLM (.ipynb)
 ├── requirements.txt         # Dependências de bibliotecas Python
 └── README.md                # Documentaçãos
